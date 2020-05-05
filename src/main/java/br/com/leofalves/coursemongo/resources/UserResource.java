@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.leofalves.coursemongo.domain.Post;
 import br.com.leofalves.coursemongo.domain.User;
 import br.com.leofalves.coursemongo.dto.UserDTO;
 import br.com.leofalves.coursemongo.services.UserService;
@@ -58,5 +59,11 @@ public class UserResource {
 		usr.setId(id);
 		usr = service.update(usr);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		User usr = service.findById(id);
+		return ResponseEntity.ok().body(usr.getPosts());
 	}
 }
