@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import br.com.leofalves.coursemongo.domain.Post;
 import br.com.leofalves.coursemongo.domain.User;
 import br.com.leofalves.coursemongo.dto.AuthorDTO;
+import br.com.leofalves.coursemongo.dto.CommentDTO;
 import br.com.leofalves.coursemongo.repositories.PostRepository;
 import br.com.leofalves.coursemongo.repositories.UserRepository;
 
@@ -35,6 +36,13 @@ public class Instantiation implements CommandLineRunner {
 		
 		Post post1 = new Post(null, Instant.now(), "Partiu Viagem", "Vou para São Paulo", new AuthorDTO(maria));
 		Post post2 = new Post(null, Instant.parse("2020-04-15T18:35:24.00Z"), "Bom dia", "Acordei Feliz Hoje", new AuthorDTO(maria));
+		
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", Instant.now(), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite!", Instant.now(), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", Instant.now(), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().add(c3);
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
